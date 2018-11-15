@@ -3,7 +3,7 @@ import { Client } from 'pg';
 require('dotenv').config({ path: '../variables.env' });
 
 
-const connectionString = "postgres://postgres:password@localhost:5432/senditdb";
+const connectionString = 'postgres://postgres:password@localhost:5432/senditdb';
 
 const client = new Client({
 	connectionString,
@@ -12,43 +12,38 @@ client.connect();
 
 // GET ALL PARCELS...
 exports.getAllParcels = (req, res) => {
-	const query = {
+	const allQuery = {
 		text: 'SELECT * FROM parcels'
 	};
-	client.query(query)
-		.then(() => {
+	client
+		.query(allQuery)
+		.then(result => {
+			client.end();
 			res.json({
-				'status': 200,
-				'data': res
+				status: 200,
+				data: result.rows
 			});
 		})
-		.catch((err) => {
-			res.json({
-				'status': 400,
-				'data': err
-			});
-		});
+		.catch(err => res.json({ status: 400, data: err }));
 };
 
 
 // GET ALL PARCELS...
 exports.getSingleParcel = (req, res) => {
-	const query = {
-		text: ''
+	const allQuery = {
+		text: 'SELECT * FROM parcels where id=$1',
+		values: [req.params.id]
 	};
-	client.query(query)
-		.then(() => {
+	client
+		.query(allQuery)
+		.then(result => {
+			client.end();
 			res.json({
-				'status': 200,
-				'data': []
+				status: 200,
+				data: result.rows
 			});
 		})
-		.catch((err) => {
-			res.json({
-				'status': 400,
-				'data': err
-			});
-		});
+		.catch(err => res.json({ status: 400, data: err }));
 };
 
 
@@ -76,33 +71,25 @@ exports.cancelParcel = (req, res) => {
 
 // SAVE PARCEL...
 exports.saveParcel = (req, res) => {
-	const { placedBy, weight, weightmetric, sentOn, deliveredOn, status, from, to, currentLocation } = req.body;
-	const query = { text: 'INSERT INTO parcels(placedBy, weight, weightmetric, sentOn, deliveredOn, status, from, to, currentLocation) VALUES($1, $2, $3, $4, $%, $6, $7, $8, $9)',
-		values: [
-			placedBy,
-			weight,
-			weightmetric,
-			sentOn,
-			deliveredOn,
-			status,
-			from,
-			to,
-			currentLocation
-		]
-	};
-	client.query(query)
-		.then(() => {
+	const { placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation } = req.body;
+	const saveQuery = {
+		text: 'INSERT INTO parcels (placedby, weight, weightmetric, senton, deliveredon, status, fromlocation, tolocation, currentlocation) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id',
+		values: [placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation] };
+	client
+		.query(saveQuery)
+		.then(result => {
+			client.end();
 			res.json({
-				'status': 200,
-				'data': res
+				status: 200,
+				data: [
+					{
+						'id': result.rows[0].id,
+						'message': 'order created'
+					}
+				]
 			});
 		})
-		.catch((err) => {
-			res.json({
-				'status': 400,
-				'data': err
-			});
-		});
+		.catch(err => res.json({ 'status': 400, 'data': err }));
 };
 
 

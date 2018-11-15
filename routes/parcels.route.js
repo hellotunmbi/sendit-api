@@ -22,7 +22,6 @@ router.patch('/:id/cancel', parcelController.cancelParcel);
 // POST /parcels
 router.post('/', parcelController.saveParcel);
 
-
 // CHANGE PARCEL DESTINATION
 // PATCH /parcels/:id/destination  => accepts destination request parameter
 router.patch('/:id/destination', parcelController.changeParcelDestination);

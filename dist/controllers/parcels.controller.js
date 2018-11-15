@@ -5,7 +5,7 @@ var _pg = require('pg');
 require('dotenv').config({ path: '../variables.env' }); // const jwt = require('jsonwebtoken');
 
 
-var connectionString = "postgres://postgres:password@localhost:5432/senditdb";
+var connectionString = 'postgres://postgres:password@localhost:5432/senditdb';
 
 var client = new _pg.Client({
 	connectionString: connectionString
@@ -69,29 +69,22 @@ exports.cancelParcel = function (req, res) {
 // SAVE PARCEL...
 exports.saveParcel = function (req, res) {
 	var _req$body = req.body,
-	    placedBy = _req$body.placedBy,
+	    placedby = _req$body.placedby,
 	    weight = _req$body.weight,
 	    weightmetric = _req$body.weightmetric,
-	    sentOn = _req$body.sentOn,
-	    deliveredOn = _req$body.deliveredOn,
+	    senton = _req$body.senton,
+	    deliveredon = _req$body.deliveredon,
 	    status = _req$body.status,
 	    from = _req$body.from,
 	    to = _req$body.to,
-	    currentLocation = _req$body.currentLocation;
+	    currentlocation = _req$body.currentlocation;
 
-	var query = { text: 'INSERT INTO parcels(placedBy, weight, weightmetric, sentOn, deliveredOn, status, from, to, currentLocation) VALUES($1, $2, $3, $4, $%, $6, $7, $8, $9)',
-		values: [placedBy, weight, weightmetric, sentOn, deliveredOn, status, from, to, currentLocation]
-	};
-	client.query(query).then(function () {
-		res.json({
-			'status': 200,
-			'data': res
-		});
+	var query = { text: 'INSERT INTO parcels(placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)', values: [placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation] };
+	client.query(query).then(function (result) {
+		client.end();
+		res.json({ status: 200, data: [{ user: req.body }] });
 	}).catch(function (err) {
-		res.json({
-			'status': 400,
-			'data': err
-		});
+		return res.json({ status: 400, data: err });
 	});
 };
 
