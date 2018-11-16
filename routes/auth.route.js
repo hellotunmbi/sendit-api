@@ -4,11 +4,8 @@ const router = express.Router();
 const authController = require('../controllers/auth.controller');
 
 router.get('/', function (req, res) {
-	res.status(200).json({ message: 'Register GET welcome' });
+	res.status(200).json({ message: 'Auth GET welcome' });
 });
-// router.get('/:id', authController.singleUser);
-
-router.get('/students', authController.students);
 
 // REGISTER...
 router.post('/register',

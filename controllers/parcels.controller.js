@@ -1,9 +1,7 @@
 // const jwt = require('jsonwebtoken');
 import { Client } from 'pg';
-require('dotenv').config({ path: '../variables.env' });
 
-
-const connectionString = 'postgres://postgres:password@localhost:5432/senditdb';
+const connectionString = process.env.DATABASE_URL;
 
 const client = new Client({
 	connectionString,
@@ -37,7 +35,6 @@ exports.getSingleParcel = (req, res) => {
 	client
 		.query(allQuery)
 		.then(result => {
-			client.end();
 			res.json({
 				status: 200,
 				data: result.rows
