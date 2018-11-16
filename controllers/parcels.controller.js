@@ -28,7 +28,7 @@ exports.getAllParcels = (req, res) => {
 };
 
 
-// GET ALL PARCELS...
+// GET SINGLE PARCELS...
 exports.getSingleParcel = (req, res) => {
 	const allQuery = {
 		text: 'SELECT * FROM parcels where id=$1',
@@ -50,22 +50,20 @@ exports.getSingleParcel = (req, res) => {
 
 // CANCEL PARCEL...
 exports.cancelParcel = (req, res) => {
-	const query = {
-		text: ''
+	const cancelQuery = {
+		text: 'UPDATE parcels set status = $1',
+		values: ['cancelled']
 	};
-	client.query(query)
+	client
+		.query(cancelQuery)
 		.then(() => {
+			client.end();
 			res.json({
 				'status': 200,
-				'data': []
+				'message': 'order cancelled'
 			});
 		})
-		.catch((err) => {
-			res.json({
-				'status': 400,
-				'data': err
-			});
-		});
+		.catch(err => res.json({ status: 400, data: err }));
 };
 
 
@@ -96,43 +94,106 @@ exports.saveParcel = (req, res) => {
 
 // CHANGE PARCEL DESTINATION...
 exports.changeParcelDestination = (req, res) => {
-	const query = {
-		text: ''
-	};
-	client.query(query)
-		.then(() => {
-			res.json({
-				'status': 200,
-				'data': []
-			});
-		})
-		.catch((err) => {
-			res.json({
-				'status': 400,
-				'data': err
-			});
+	if(!req.body.destination) {
+		res.json({
+			'status': 400,
+			'error': 'enter destination'
 		});
+	} else {
+		const changeQuery = {
+			text: 'UPDATE parcels SET tolocation = $1 WHERE id = $2::int  returning id',
+			values: [
+				req.body.destination,
+				req.params.id
+			]
+		};
+		client
+			.query(changeQuery)
+			.then((result) => {
+				client.end();
+				res.json({
+					'status': 200,
+					'data': [
+						{
+							'id': result.rows[0].id,
+							'to': req.body.destination,
+							'message': 'Parcel destination updated'
+						}
+					]
+				});
+			})
+			.catch(err => res.json({ status: 400, data: err }));
+	}
 };
 
 
 
 // CHANGE PARCEL STATUS...
 exports.changeParcelStatus = (req, res) => {
-	const query = {
-		text: ''
-	};
-	client.query(query)
-		.then(() => {
-			res.json({
-				'status': 200,
-				'data': []
-			});
-		})
-		.catch((err) => {
-			res.json({
-				'status': 400,
-				'data': err
-			});
+	if (!req.body.status) {
+		res.json({
+			'status': 400,
+			'error': 'enter status'
 		});
+	} else {
+		const changeQuery = {
+			text: 'UPDATE parcels SET status = $1 WHERE id = $2::int returning id',
+			values: [
+				req.body.status,
+				req.params.id
+			]
+		};
+		client
+			.query(changeQuery)
+			.then((result) => {
+				client.end();
+				res.json({
+					'status': 200,
+					'data': [
+						{
+							'id': result.rows[0].id,
+							'status': req.body.status,
+							'message': 'Parcel status updated'
+						}
+					]
+				});
+			})
+			.catch(err => res.json({ status: 400, data: err }));
+	}
+};
+
+
+// CHANGE PARCEL CURRENT LOCATION...
+exports.changeParcelCurrentLocation = (req, res) => {
+	if (!req.body.currentlocation) {
+		res.json({
+			'status': 400,
+			'error': 'enter current location'
+		});
+	} else {
+		const changeQuery = {
+			text: 'UPDATE parcels SET currentlocation = $1 WHERE id = $2::int  returning id',
+			values: [
+				req.body.currentlocation,
+				req.params.id
+			]
+		};
+		client
+			.query(changeQuery)
+			.then((result) => {
+				client.end();
+				res.json({
+					'status': 200,
+					'data': [
+						{
+							'id': result.rows[0].id,
+							'currentLocation': req.body.currentlocation,
+							'message': 'Parcel location updated'
+						}
+					]
+				});
+			})
+			.catch(err => res.json({ status: 400, data: err }));
+	}
 };
 
