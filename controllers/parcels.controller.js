@@ -69,25 +69,27 @@ exports.cancelParcel = (req, res) => {
 
 // SAVE PARCEL...
 exports.saveParcel = (req, res) => {
-	const { placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation } = req.body;
-	const saveQuery = {
-		text: 'INSERT INTO parcels (placedby, weight, weightmetric, senton, deliveredon, status, fromlocation, tolocation, currentlocation) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id',
-		values: [placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation] };
-	client
-		.query(saveQuery)
-		.then(result => {
-			client.end();
-			res.json({
-				status: 200,
-				data: [
-					{
-						'id': result.rows[0].id,
-						'message': 'order created'
-					}
-				]
-			});
-		})
-		.catch(err => res.json({ 'status': 400, 'data': err }));
+	if (!req.body.placedby || !req.body.weight || !req.body.weightmetric || !req.body.senton || !req.body.deliveredon || !req.body.status || !req.body.fromlocation || !req.body.tolocation || !req.body.currentlocation) {
+		res.json({ status: 400, error: 'some paramenters are missing' });
+	} else {
+		const { placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation } = req.body;
+		const saveQuery = { text: 'INSERT INTO parcels (placedby, weight, weightmetric, senton, deliveredon, status, fromlocation, tolocation, currentlocation) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id', values: [placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation] };
+		client
+			.query(saveQuery)
+			.then(result => {
+				client.end();
+				res.json({
+					status: 200,
+					data: [
+						{
+							id: result.rows[0].id,
+							message: 'order created'
+						}
+					]
+				});
+			})
+			.catch(err => res.json({ status: 400, data: err }));
+	}
 };
 
 
