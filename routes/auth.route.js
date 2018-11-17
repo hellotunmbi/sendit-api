@@ -8,9 +8,7 @@ router.get('/', function (req, res) {
 });
 
 // REGISTER...
-router.post('/register',
-	authController.signup
-);
+router.post('/signup', authController.signup);
 
 // LOGIN...
 router.post('/login', authController.login);

@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 const parcelController = require('../controllers/parcels.controller');
+const authMiddleware = require('../middleware/auth.middleware');
 
 // GET ALL PARCELS
 // GET /parcels
@@ -15,7 +16,7 @@ router.get('/:id', parcelController.getSingleParcel); //DONE
 
 // CANCEL PARCEL
 // PATCH /parcels/:id
-router.patch('/:id/cancel', parcelController.cancelParcel);  //DONE
+router.patch('/:id/cancel', authMiddleware.verifyParcelOwnership);  //DONE
 
 
 // SAVE A PARCEL INFO
