@@ -1,5 +1,7 @@
 // const jwt = require('jsonwebtoken');
 import { Client } from 'pg';
+import jwt from 'jsonwebtoken';
+import Helper from '../helpers';
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -8,45 +10,39 @@ const client = new Client({
 });
 client.connect();
 
-
-exports.students = (req, res) => {
-	client.query('SELECT * FROM students where id = $1', [3], (err, result) => {
-		client.end();
-		if (err) {
-			console.log(err);
-			res.send(err);
-		}
-		res.send(result.rows);
-	});
-};
-
 // SIGNUP...
 exports.signup = (req, res) => {
+	const hashedPassword = Helper.hashPassword(req.body.password);
 	const { firstname, lastname, othernames, email, isAdmin } = req.body;
 	const query = {
-		text: 'INSERT INTO users(firstname, lastname, othernames, email, registered, isadmin) VALUES($1, $2, $3, $4, NOW(), $5)',
+		text: 'INSERT INTO users(firstname, lastname, othernames, email, registered, isadmin, password) VALUES($1, $2, $3, $4, NOW(), $5, $6) returning *',
 		values: [
 			firstname,
 			lastname,
 			othernames,
 			email,
-			isAdmin
+			isAdmin,
+			hashedPassword
 		]
 	};
 	client.query(query)
 		.then(result => {
-			client.end();
+			const token = Helper.generateToken(result.rows[0].id, req.body.email);
 			res.json({
 				'status': 200,
 				'data': [{
-					'user': req.body,
+					'token': token,
+					'user': result.rows[0],
 				}]
 			});
 		})
-		.catch(err => res.json({
-			'status': 400,
-			'data': err
-		}));
+		.catch(err => {
+			if (err.routine === '_bt_check_unique') {
+				res.json({ 'status': 400,	'message': 'Email address has already been taken'});
+			} else {
+				res.json({ 'status': 400,	'data': err	});
+			}
+		});
 };
 
 // LOGIN...

@@ -4,7 +4,7 @@
   "description": "NodeJS API for SendIT",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require babel-polyfill --compilers js:babel-register",
     "start": "nodemon server.js --exec babel-node --presets babel-preset-env"
   },
   "repository": {
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/hellotunmbi/sendit-api.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Olutunmbi Banto",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/hellotunmbi/sendit-api/issues"
@@ -25,6 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "pg": "^7.6.1",
@@ -32,7 +33,11 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.6"
   }
 }
