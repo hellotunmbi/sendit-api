@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --require babel-polyfill --compilers js:babel-register",
-    "start": "node server.js",
+    "start": "npm run build && node dist/server.js",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "dev": "nodemon server.js --exec babel-node --presets babel-preset-env"
   },
   "repository": {
