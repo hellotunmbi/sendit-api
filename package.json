@@ -30,8 +30,9 @@
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "pg": "^7.6.1",
+    "rimraf": "^2.6.2",
     "shortid": "^2.2.14",
-    "rimraf": "^2.6.2"
+    "swagger": "^0.7.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
