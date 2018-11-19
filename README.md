@@ -12,7 +12,7 @@ NodeJS API for SendIT
 - Travis CI
 - Babel for transpiling
 
-### Base URL: https://sendit-hook.herokuapp.com/
+### Base URL: https://sendit-hook.herokuapp.com/api/v1
 
 ## /parcels
 
