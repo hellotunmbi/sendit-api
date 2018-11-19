@@ -1,28 +1,35 @@
 // const jwt = require('jsonwebtoken');
-import { Client } from 'pg';
+import { Pool } from 'pg';
 
 const connectionString = process.env.DATABASE_URL;
 
-const client = new Client({
+const pool = new Pool({
 	connectionString,
 });
-client.connect();
+
+try {
+	pool.on('connect', () => {
+		console.log('connected to the db');
+	});
+} catch (err) {
+	console.log('unable to connect to db');
+}
 
 // GET ALL PARCELS...
 exports.getAllParcels = (req, res) => {
 	const allQuery = {
 		text: 'SELECT * FROM parcels'
 	};
-	client
+	pool
 		.query(allQuery)
 		.then(result => {
-			client.end();
+			pool.end();
 			res.json({
 				status: 200,
 				data: result.rows
 			});
 		})
-		.catch(err => res.json({ status: 400, data: err }));
+		.catch(err => { res.json({ status: 400, data: err }); });
 };
 
 
@@ -32,15 +39,16 @@ exports.getSingleParcel = (req, res) => {
 		text: 'SELECT * FROM parcels where id=$1',
 		values: [req.params.id]
 	};
-	client
+	pool
 		.query(allQuery)
 		.then(result => {
 			res.json({
 				status: 200,
 				data: result.rows
 			});
+			pool.end();
 		})
-		.catch(err => res.json({ status: 400, data: err }));
+		.catch(err => { res.json({ status: 400, data: err });  });
 };
 
 
@@ -51,30 +59,34 @@ exports.cancelParcel = (req, res) => {
 		text: 'UPDATE parcels set status = $1',
 		values: ['cancelled']
 	};
-	client
+	pool
 		.query(cancelQuery)
 		.then(() => {
-			client.end();
+			pool.end();
 			res.json({
 				'status': 200,
 				'message': 'order cancelled'
 			});
 		})
-		.catch(err => res.json({ status: 400, data: err }));
+		.catch(err => { res.json({ status: 400, data: err }); });
 };
 
 
 // SAVE PARCEL...
 exports.saveParcel = (req, res) => {
-	if (!req.body.placedby || !req.body.weight || !req.body.weightmetric || !req.body.senton || !req.body.deliveredon || !req.body.status || !req.body.fromlocation || !req.body.tolocation || !req.body.currentlocation) {
+	if (!req.body.placedby || !req.body.weight || !req.body.weightmetric || !req.body.senton || !req.body.deliveredon || !req.body.status || !req.body.from || !req.body.to || !req.body.currentlocation) {
 		res.json({ status: 400, error: 'some paramenters are missing' });
 	} else {
-		const { placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation } = req.body;
-		const saveQuery = { text: 'INSERT INTO parcels (placedby, weight, weightmetric, senton, deliveredon, status, fromlocation, tolocation, currentlocation) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id', values: [placedby, weight, weightmetric, senton, deliveredon, status, from, to, currentlocation] };
-		client
+		const { placedby, weight, weightmetric, senton, deliveredon, status, currentlocation } = req.body;
+		const fromlocation = req.body.from;
+		const tolocation = req.body.to;
+		const saveQuery = {
+			text: 'INSERT INTO parcels (placedby, weight, weightmetric, senton, deliveredon, status, fromlocation, tolocation, currentlocation) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id',
+			values: [placedby, weight, weightmetric, senton, deliveredon, status, fromlocation, tolocation, currentlocation] };
+		pool
 			.query(saveQuery)
 			.then(result => {
-				client.end();
+				pool.end();
 				res.json({
 					status: 200,
 					data: [
@@ -85,7 +97,7 @@ exports.saveParcel = (req, res) => {
 					]
 				});
 			})
-			.catch(err => res.json({ status: 400, data: err }));
+			.catch(err => { res.json({ status: 400, data: err }); });
 	}
 };
 
@@ -106,10 +118,10 @@ exports.changeParcelDestination = (req, res) => {
 				req.params.id
 			]
 		};
-		client
+		pool
 			.query(changeQuery)
 			.then((result) => {
-				client.end();
+				pool.end();
 				res.json({
 					'status': 200,
 					'data': [
@@ -121,7 +133,7 @@ exports.changeParcelDestination = (req, res) => {
 					]
 				});
 			})
-			.catch(err => res.json({ status: 400, data: err }));
+			.catch(err => { res.json({ status: 400, data: err }); });
 	}
 };
 
@@ -142,10 +154,10 @@ exports.changeParcelStatus = (req, res) => {
 				req.params.id
 			]
 		};
-		client
+		pool
 			.query(changeQuery)
 			.then((result) => {
-				client.end();
+				pool.end();
 				res.json({
 					'status': 200,
 					'data': [
@@ -157,7 +169,7 @@ exports.changeParcelStatus = (req, res) => {
 					]
 				});
 			})
-			.catch(err => res.json({ status: 400, data: err }));
+			.catch(err => { res.json({ status: 400, data: err }); });
 	}
 };
 
@@ -177,10 +189,10 @@ exports.changeParcelCurrentLocation = (req, res) => {
 				req.params.id
 			]
 		};
-		client
+		pool
 			.query(changeQuery)
 			.then((result) => {
-				client.end();
+				pool.end();
 				res.json({
 					'status': 200,
 					'data': [
@@ -192,7 +204,7 @@ exports.changeParcelCurrentLocation = (req, res) => {
 					]
 				});
 			})
-			.catch(err => res.json({ status: 400, data: err }));
+			.catch(err => { res.json({ status: 400, data: err }); });
 	}
 };
 

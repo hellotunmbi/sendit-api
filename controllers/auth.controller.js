@@ -1,14 +1,20 @@
 // const jwt = require('jsonwebtoken');
-import { Client } from 'pg';
-import jwt from 'jsonwebtoken';
+import { Pool } from 'pg';
 import Helper from '../helpers';
 
 const connectionString = process.env.DATABASE_URL;
 
-const client = new Client({
+const pool = new Pool({
 	connectionString,
 });
-client.connect();
+
+try {
+	pool.on('connect', () => {
+		console.log('connected to the db');
+	});
+} catch (err) {
+	console.log('unable to connect to db');
+}
 
 // SIGNUP...
 exports.signup = (req, res) => {
@@ -25,7 +31,7 @@ exports.signup = (req, res) => {
 			hashedPassword
 		]
 	};
-	client.query(query)
+	pool.query(query)
 		.then(result => {
 			const token = Helper.generateToken(result.rows[0].id, req.body.email);
 			res.json({
@@ -35,6 +41,7 @@ exports.signup = (req, res) => {
 					'user': result.rows[0],
 				}]
 			});
+			pool.end();
 		})
 		.catch(err => {
 			if (err.routine === '_bt_check_unique') {
@@ -45,27 +52,32 @@ exports.signup = (req, res) => {
 		});
 };
 
+
 // LOGIN...
 exports.login = (req, res) => {
+	const hashedPassword = Helper.hashPassword(req.body.password);
+	console.log(hashedPassword);
 	const query = {
-		text: 'SELECT * FROM users where email=$1 and password=$2',
+		text: 'select * from users where email=$1 and password = $2',
 		values: [
 			req.body.email,
-			req.body.password
+			hashedPassword
 		]
 	};
 
-	client.query(query)
+	pool.query(query)
 		.then(() => {
 			res.json({
 				'status': 200,
 				'data': res
 			});
+			pool.end();
 		})
-		.catch((err) => res.json(
+		.catch((err) => {res.json(
 			{
 				'status': 400,
 				'data': err
-			})
+			});
+		}
 		);
 };
