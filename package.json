@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --require babel-polyfill --compilers js:babel-register",
-    "start": "npm run build && node dist/server.js",
+    "start": "node dist/server.js",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "dev": "nodemon server.js --exec babel-node --presets babel-preset-env"
   },
@@ -32,9 +32,7 @@
     "morgan": "^1.9.1",
     "pg": "^7.6.1",
     "rimraf": "^2.6.2",
-    "shortid": "^2.2.14",
-    "babel-cli": "^6.26.0",
-    "babel-polyfill": "^6.26.0"
+    "shortid": "^2.2.14"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
