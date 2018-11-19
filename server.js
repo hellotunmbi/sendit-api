@@ -29,8 +29,8 @@ app.use('/api/v1/users', authMiddleware.verifyToken, users);
 
 let port = 1234;
 
-const server = app.listen(process.env.PORT || port, () => {
+app.listen(process.env.PORT || port, () => {
 	console.log(`Server now up and running on port ${port}`);
 });
 
-module.exports = server;
+// module.exports = server;
