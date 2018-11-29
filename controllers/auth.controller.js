@@ -1,6 +1,7 @@
 // const jwt = require('jsonwebtoken');
 import { Pool } from 'pg';
 import Helper from '../helpers';
+import db from '../models';
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -17,67 +18,71 @@ try {
 }
 
 // SIGNUP...
-exports.signup = (req, res) => {
+exports.signup = async (req, res) => {
 	const hashedPassword = Helper.hashPassword(req.body.password);
 	const { firstname, lastname, othernames, email, isAdmin } = req.body;
-	const query = {
-		text: 'INSERT INTO users(firstname, lastname, othernames, email, registered, isadmin, password) VALUES($1, $2, $3, $4, NOW(), $5, $6) returning *',
-		values: [
-			firstname,
-			lastname,
-			othernames,
-			email,
-			isAdmin,
-			hashedPassword
-		]
-	};
-	pool.query(query)
-		.then(result => {
-			const token = Helper.generateToken(result.rows[0].id, req.body.email);
-			res.json({
-				'status': 200,
-				'data': [{
-					'token': token,
-					'user': result.rows[0],
-				}]
-			});
-			pool.end();
-		})
-		.catch(err => {
-			if (err.routine === '_bt_check_unique') {
-				res.json({ 'status': 400,	'message': 'Email address has already been taken'});
-			} else {
-				res.json({ 'status': 400,	'data': err	});
-			}
+	// const query = {
+	// 	text: 'INSERT INTO users(firstname, lastname, othernames, email, registered, isadmin, password) VALUES($1, $2, $3, $4, NOW(), $5, $6) returning *',
+	// 	values: [
+	// 		firstname,
+	// 		lastname,
+	// 		othernames,
+	// 		email,
+	// 		isAdmin,
+	// 		hashedPassword
+	// 	]
+	// };
+	const text = 'INSERT INTO users(firstname, lastname, othernames, email, registered, isadmin, password) VALUES($1, $2, $3, $4, NOW(), $5, $6) returning *';
+	try {
+		const {rows} = await db.query(text, [	firstname, lastname, othernames, email, isAdmin, hashedPassword ]);
+		const token = Helper.generateToken(rows[0].id, req.body.email);
+		if(!rows[0]) {
+			res.json({ 'status': 400, 'data': 'Unable to insert' });
+		}
+		res.json({
+			'status': 200,
+			'data': [{
+				'token': token,
+				'user': rows[0],
+			}]
 		});
+	} catch(err) {
+		if (err.routine === '_bt_check_unique') {
+			res.json({ 'status': 400,	'message': 'Email address has already been taken'});
+		} else {
+			res.json({ 'status': 400,	'data': err	});
+		}
+	}
 };
 
 
 // LOGIN...
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
 	const hashedPassword = Helper.hashPassword(req.body.password);
 	console.log(hashedPassword);
-	const query = {
-		text: 'select * from users where email=$1 and password = $2',
-		values: [
-			req.body.email,
-			hashedPassword
-		]
-	};
+	const text = 'select * from users where email=$1 and password = $2';
+	// const query = {
+	// 	text: 'select * from users where email=$1 and password = $2',
+	// 	values: [
+	// 		req.body.email,
+	// 		hashedPassword
+	// 	]
+	// };
 
-	pool.query(query)
-		.then(() => {
+	try {
+		const { rows } = await db.query(text, [req.body.email, hashedPassword]);
+		if(!rows[0]) {
 			res.json({
-				'status': 200,
-				'data': res
-			});
-			pool.end();
-		})
-		.catch((err) => {res.json(
-			{
 				'status': 400,
-				'data': err
+				'data': 'Invalid Login'
 			});
 		}
-		);
+		res.json({
+			'status': 200,
+			'data': rows[0]
+		});
+	} catch(error) {
+		res.json({ 'status': 400, 'data': error });
+	}
+
 };
