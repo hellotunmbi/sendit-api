@@ -1,7 +1,5 @@
 'use strict';
 
-var _pg = require('pg');
-
 var _helpers = require('../helpers');
 
 var _helpers2 = _interopRequireDefault(_helpers);
@@ -12,22 +10,8 @@ var _models2 = _interopRequireDefault(_models);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var connectionString = process.env.DATABASE_URL; // const jwt = require('jsonwebtoken');
-
-
-var pool = new _pg.Pool({
-	connectionString: connectionString
-});
-
-try {
-	pool.on('connect', function () {
-		console.log('connected to the db');
-	});
-} catch (err) {
-	console.log('unable to connect to db');
-}
-
 // SIGNUP...
+// const jwt = require('jsonwebtoken');
 exports.signup = async function (req, res) {
 	var hashedPassword = _helpers2.default.hashPassword(req.body.password);
 	var _req$body = req.body,

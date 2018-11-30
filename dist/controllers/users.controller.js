@@ -1,35 +1,29 @@
 'use strict';
 
-var _pg = require('pg');
+var _models = require('../models');
 
-var connectionString = process.env.DATABASE_URL;
+var _models2 = _interopRequireDefault(_models);
 
-var pool = new _pg.Pool({
-	connectionString: connectionString
-});
-
-try {
-	pool.on('connect', function () {
-		console.log('connected to the db');
-	});
-} catch (err) {
-	console.log('unable to connect to db');
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // LOGIN...
-exports.getParcelsByUser = function (req, res) {
-	var allQuery = {
-		text: 'SELECT * FROM parcels where placedby=$1',
-		values: [req.params.userid]
-	};
-	pool.query(allQuery).then(function (result) {
-		res.json({
-			status: 200,
-			data: result.rows
-		});
-		pool.end();
-	}).catch(function (err) {
-		res.json({ status: 400, data: err });
-		pool.end();
-	});
+exports.getParcelsByUser = async function (req, res) {
+	var text = 'SELECT * FROM parcels where placedby=$1';
+	var values = [req.params.userid];
+
+	try {
+		var _ref = await _models2.default.query(text, values),
+		    rows = _ref.rows;
+
+		if (rows[0]) {
+			res.json({
+				'status': 200,
+				'data': rows
+			});
+		} else {
+			res.json({ 'status': 200, 'data': { 'message': 'No parcel found' } });
+		}
+	} catch (err) {
+		res.json({ 'status': 400, 'data': err });
+	}
 };

@@ -1,21 +1,6 @@
 // const jwt = require('jsonwebtoken');
-import { Pool } from 'pg';
 import Helper from '../helpers';
 import db from '../models';
-
-const connectionString = process.env.DATABASE_URL;
-
-const pool = new Pool({
-	connectionString,
-});
-
-try {
-	pool.on('connect', () => {
-		console.log('connected to the db');
-	});
-} catch (err) {
-	console.log('unable to connect to db');
-}
 
 // SIGNUP...
 exports.signup = async (req, res) => {

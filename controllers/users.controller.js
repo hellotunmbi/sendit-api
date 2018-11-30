@@ -1,37 +1,22 @@
-import { Pool } from 'pg';
-
-const connectionString = process.env.DATABASE_URL;
-
-const pool = new Pool({
-	connectionString,
-});
-
-try {
-	pool.on('connect', () => {
-		console.log('connected to the db');
-	});
-} catch (err) {
-	console.log('unable to connect to db');
-}
-
+import db from '../models';
 
 // LOGIN...
-exports.getParcelsByUser = (req, res) => {
-	const allQuery = {
-		text: 'SELECT * FROM parcels where placedby=$1',
-		values: [req.params.userid]
-	};
-	pool
-		.query(allQuery)
-		.then(result => {
+exports.getParcelsByUser = async (req, res) => {
+	const text = 'SELECT * FROM parcels where placedby=$1';
+	const values = [req.params.userid];
+
+	try {
+		const { rows } = await db.query(text, values);
+
+		if (rows[0]) {
 			res.json({
-				status: 200,
-				data: result.rows
+				'status': 200,
+				'data': rows
 			});
-			pool.end();
-		})
-		.catch(err => {
-			res.json({ status: 400, data: err });
-			pool.end();
-		});
+		} else {
+			res.json({ 'status': 200, 'data': { 'message': 'No parcel found' } });
+		}
+	} catch(err) {
+		res.json({ 'status': 400, 'data': err });
+	}
 };

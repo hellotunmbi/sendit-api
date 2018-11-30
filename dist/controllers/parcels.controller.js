@@ -1,7 +1,5 @@
 'use strict';
 
-var _pg = require('pg');
-
 var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
@@ -12,22 +10,8 @@ var _moment2 = _interopRequireDefault(_moment);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var connectionString = process.env.DATABASE_URL; // const jwt = require('jsonwebtoken');
-
-
-var pool = new _pg.Pool({
-	connectionString: connectionString
-});
-
-try {
-	pool.on('connect', function () {
-		console.log('connected to the db');
-	});
-} catch (err) {
-	console.log('unable to connect to db');
-}
-
 // GET ALL PARCELS...
+// const jwt = require('jsonwebtoken');
 exports.getAllParcels = async function (req, res) {
 	var text = 'SELECT * FROM parcels';
 	try {
