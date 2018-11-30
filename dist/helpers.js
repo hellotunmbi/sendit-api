@@ -31,7 +31,7 @@ var Helper = {
 		var token = _jsonwebtoken2.default.sign({
 			id: id,
 			email: email
-		}, process.env.SECRET, { expiresIn: '7d' });
+		}, process.env.SECRET, { expiresIn: '30d' });
 		return token;
 	}
 };

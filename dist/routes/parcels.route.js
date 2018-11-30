@@ -23,7 +23,7 @@ router.get('/:id', parcelController.getSingleParcel); //DONE
 
 // CANCEL PARCEL
 // PATCH /parcels/:id
-router.patch('/:id/cancel', authMiddleware.verifyParcelOwnership); //DONE
+router.patch('/:id/cancel', authMiddleware.verifyParcelOwnership, parcelController.cancelParcel); //DONE
 
 
 // SAVE A PARCEL INFO
@@ -33,7 +33,7 @@ router.post('/', parcelController.saveParcel); //DONE
 
 // CHANGE PARCEL DESTINATION
 // PATCH /parcels/:id/destination  => accepts destination request parameter
-router.patch('/:id/destination', parcelController.changeParcelDestination);
+router.patch('/:id/destination', authMiddleware.verifyParcelOwnership, parcelController.changeParcelDestination);
 
 // CHANGE PARCEL STATUS
 // PATCH /parcels/:id/status  => accepts status request parameter

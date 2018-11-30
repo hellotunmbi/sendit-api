@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Client } from 'pg';
+import db from '../models';
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -24,17 +25,21 @@ exports.verifyToken = (req, res, next) => {
 };
 
 
-exports.verifyParcelOwnership = (req, res, next) => {
+exports.verifyParcelOwnership = async (req, res, next) => {
 	const parcelId = req.params.id;
-	const userId = req.params.userId;
-	if (!userId) return res.json({ status: 403, message: 'No token provided.' });
+	const userId = req.body.userId;
 
-	const allQuery = { text: 'SELECT placedby, id, status FROM parcels where id=$1 and placedby=$2', values: [parcelId, userId] };
-	client
-		.query(allQuery)
-		.then(result => {
-			res.json({ status: 200, data: result.rows });
-		})
-		.catch(err => res.json({ status: 400, data: err }));
+	if (!userId) return res.json({ status: 403, message: 'Please provide userId' });
+
+	const text = 'SELECT placedby, id, status FROM parcels where id=$1 and placedby=$2';
+
+	try {
+		const { rows } = await db.query(text, [parcelId, userId]);
+		if(rows[0]){
+			next();
+		} else {
+			res.json({ 'status': 403, 'data': { 'message': 'You are not the owner of this parcel'} });
+		}
+	} catch(err) { res.json({ status: 400, data: err }); }
 };
 

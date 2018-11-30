@@ -22,6 +22,8 @@ var _dotenv2 = _interopRequireDefault(_dotenv);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
 _dotenv2.default.config({ path: 'variables.env' });
 
 // ROUTES...
@@ -36,6 +38,7 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use((0, _cors2.default)());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get('/api/v1/', function (req, res) {
 	res.json('Welcome to Home of SendIT');
 });
@@ -45,8 +48,8 @@ app.use('/api/v1/users', authMiddleware.verifyToken, users);
 
 var port = 1234;
 
-app.listen(process.env.PORT || port, function () {
+var server = app.listen(process.env.PORT || port, function () {
 	console.log('Server now up and running on port ' + port);
 });
 
-// module.exports = server;
+module.exports = server;
