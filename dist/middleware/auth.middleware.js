@@ -6,6 +6,10 @@ var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
 var _pg = require('pg');
 
+var _models = require('../models');
+
+var _models2 = _interopRequireDefault(_models);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var connectionString = process.env.DATABASE_URL;
@@ -27,15 +31,24 @@ exports.verifyToken = function (req, res, next) {
 	});
 };
 
-exports.verifyParcelOwnership = function (req, res, next) {
+exports.verifyParcelOwnership = async function (req, res, next) {
 	var parcelId = req.params.id;
-	var userId = req.params.userId;
-	if (!userId) return res.json({ status: 403, message: 'No token provided.' });
+	var userId = req.body.userId;
 
-	var allQuery = { text: 'SELECT placedby, id, status FROM parcels where id=$1 and placedby=$2', values: [parcelId, userId] };
-	client.query(allQuery).then(function (result) {
-		res.json({ status: 200, data: result.rows });
-	}).catch(function (err) {
-		return res.json({ status: 400, data: err });
-	});
+	if (!userId) return res.json({ status: 403, message: 'Please provide userId' });
+
+	var text = 'SELECT placedby, id, status FROM parcels where id=$1 and placedby=$2';
+
+	try {
+		var _ref = await _models2.default.query(text, [parcelId, userId]),
+		    rows = _ref.rows;
+
+		if (rows[0]) {
+			next();
+		} else {
+			res.json({ 'status': 403, 'data': { 'message': 'You are not the owner of this parcel' } });
+		}
+	} catch (err) {
+		res.json({ status: 400, data: err });
+	}
 };

@@ -25,7 +25,7 @@ const Helper = {
 			email
 		},
 		process.env.SECRET,
-		{ expiresIn: '7d' }
+		{ expiresIn: '2y' }
 		);
 		return token;
 	}

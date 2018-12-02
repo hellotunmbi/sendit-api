@@ -1,27 +1,29 @@
 'use strict';
 
-var _pg = require('pg');
+var _models = require('../models');
 
-var connectionString = process.env.DATABASE_URL; // const jwt = require('jsonwebtoken');
+var _models2 = _interopRequireDefault(_models);
 
-
-var client = new _pg.Client({
-	connectionString: connectionString
-});
-client.connect();
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // LOGIN...
-exports.getParcelsByUser = function (req, res) {
-	var allQuery = {
-		text: 'SELECT * FROM parcels where placedby=$1',
-		values: [req.params.userid]
-	};
-	client.query(allQuery).then(function (result) {
-		res.json({
-			status: 200,
-			data: result.rows
-		});
-	}).catch(function (err) {
-		res.json({ status: 400, data: err });
-	});
+exports.getParcelsByUser = async function (req, res) {
+	var text = 'SELECT * FROM parcels where placedby=$1';
+	var values = [req.params.userid];
+
+	try {
+		var _ref = await _models2.default.query(text, values),
+		    rows = _ref.rows;
+
+		if (rows[0]) {
+			res.json({
+				'status': 200,
+				'data': rows
+			});
+		} else {
+			res.json({ 'status': 200, 'data': { 'message': 'No parcel found' } });
+		}
+	} catch (err) {
+		res.json({ 'status': 400, 'data': err });
+	}
 };
