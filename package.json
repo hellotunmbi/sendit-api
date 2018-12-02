@@ -33,7 +33,9 @@
     "pg": "^7.6.1",
     "rimraf": "^2.6.2",
     "shortid": "^2.2.14",
-    "swagger-ui-express": "^4.0.1"
+    "swagger-ui-express": "^4.0.1",
+    "swagger-node-express": "~2.0",
+    "minimist": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -20,7 +20,7 @@ NodeJS API for SendIT
 - GET /parcels/:id - Fetch a specific parcel delivery
 - POST /parcels - Create new parcel
 - PATCH /parcels/:id/cancel - Cancel a specific parcel delivery order
-- GET /users/<userid>/parcels - Fetch all parcel delivery order by a specific user
+- GET /users/:userId/parcels - Fetch all parcel delivery order by a specific user
 
 - PATCH /parcels/:id/destination - Change the delivery destination of an order
 - PATCH /parcels/:id/status - Change the status of an order
