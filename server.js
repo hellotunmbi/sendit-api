@@ -37,7 +37,7 @@ swagger.setApiInfo({
 	licenseUrl: ''
 });
 
-app.get('/', function (req, res) {
+app.get('/api/v1/docs', function (req, res) {
 	res.sendFile(__dirname + '/docs/index.html');
 });
 
