@@ -1,0 +1,767 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "SendIT API Documentation",
+    "version": "0.1",
+    "title": "SendIT API"
+  },
+  "paths": {
+    "/api/v1/users/6/parcels": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "Generated header parameter. Example value ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10'",
+            "required": false,
+            "type": "string",
+            "x-example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Definition generated from Swagger Inspector",
+            "schema": {
+              "$ref": "#/definitions/Model3"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/parcels/6/status": {
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "Generated header parameter. Example value ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10'",
+            "required": false,
+            "type": "string",
+            "x-example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Definition generated from Swagger Inspector",
+            "schema": {
+              "$ref": "#/definitions/Model5"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/parcels/6/destination": {
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "Generated header parameter. Example value ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10'",
+            "required": false,
+            "type": "string",
+            "x-example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Definition generated from Swagger Inspector",
+            "schema": {
+              "$ref": "#/definitions/Model6"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/parcels": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "Generated header parameter. Example value ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10'",
+            "required": false,
+            "type": "string",
+            "x-example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Definition generated from Swagger Inspector",
+            "schema": {
+              "$ref": "#/definitions/Model9"
+            }
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "Generated header parameter. Example value ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10'",
+            "required": false,
+            "type": "string",
+            "x-example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Model1"
+            },
+            "x-examples": {
+              "application/json": "{\n    \"placedby\": \"6\",\n    \"weight\": 200,\n    \"weightmetric\": \"kg\",\n    \"deliveredon\": \"02-Aug-2018\",\n    \"senton\": \"02-Aug-2018\",\n    \"status\": \"placed\",\n    \"from\": \"iyana ipaja\",\n    \"to\": \"lekki phase 1\",\n    \"currentlocation\": \"iyana ipaja\"\n    \n}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Definition generated from Swagger Inspector",
+            "schema": {
+              "$ref": "#/definitions/Model8"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/parcels/{param0}/{param1}": {
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "Generated header parameter. Example value ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10'",
+            "required": false,
+            "type": "string",
+            "x-example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJoZWxsb3R1bm1iaUBnbWFpbC5jb20iLCJpYXQiOjE1NDM3NzgxODMsImV4cCI6MTU0NjM3MDE4M30.rku-m20LRwETr4y4sablQq_FXAFtm2q7OWiDZvInq10"
+          },
+          {
+            "name": "param0",
+            "in": "path",
+            "description": "Example values form path are: '6' and '4'",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "param1",
+            "in": "path",
+            "description": "Example values form path are: 'currentlocation' and 'cancel'",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Definition generated from Swagger Inspector",
+            "schema": {
+              "$ref": "#/definitions/Model4"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/{param2}": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Model0"
+            },
+            "x-examples": {
+              "application/json": "{\n    \"email\": \"hellotunmbi@gmail.com\",\n    \"password\": \"banto\"\n}"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "path",
+            "description": "Example values form path are: 'login' and 'signup'",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Definition generated from Swagger Inspector",
+            "schema": {
+              "$ref": "#/definitions/Model10"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Model2": {
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "othernames": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Model1": {
+      "properties": {
+        "placedby": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "weightmetric": {
+          "type": "string"
+        },
+        "deliveredon": {
+          "type": "string"
+        },
+        "senton": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "currentlocation": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "weightmetric": "weightmetric",
+        "senton": "senton",
+        "currentlocation": "currentlocation",
+        "placedby": "placedby",
+        "weight": 0,
+        "from": "from",
+        "deliveredon": "deliveredon",
+        "to": "to",
+        "status": "status"
+      }
+    },
+    "Data": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "placedby": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "string"
+        },
+        "weightmetric": {
+          "type": "string"
+        },
+        "senton": {
+          "type": "string"
+        },
+        "deliveredon": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "fromlocation": {
+          "type": "string"
+        },
+        "tolocation": {
+          "type": "string"
+        },
+        "currentlocation": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "weightmetric": "weightmetric",
+        "tolocation": "tolocation",
+        "fromlocation": "fromlocation",
+        "senton": "senton",
+        "currentlocation": "currentlocation",
+        "placedby": "placedby",
+        "weight": "weight",
+        "id": "id",
+        "deliveredon": "deliveredon",
+        "status": "status"
+      }
+    },
+    "Model3": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Data"
+          }
+        }
+      },
+      "example": {
+        "data": [
+          {
+            "weightmetric": "weightmetric",
+            "tolocation": "tolocation",
+            "fromlocation": "fromlocation",
+            "senton": "senton",
+            "currentlocation": "currentlocation",
+            "placedby": "placedby",
+            "weight": "weight",
+            "id": "id",
+            "deliveredon": "deliveredon",
+            "status": "status"
+          },
+          {
+            "weightmetric": "weightmetric",
+            "tolocation": "tolocation",
+            "fromlocation": "fromlocation",
+            "senton": "senton",
+            "currentlocation": "currentlocation",
+            "placedby": "placedby",
+            "weight": "weight",
+            "id": "id",
+            "deliveredon": "deliveredon",
+            "status": "status"
+          }
+        ],
+        "status": 0
+      }
+    },
+    "Model4_Data": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "currentLocation": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "id": "id",
+        "message": "message",
+        "currentLocation": "currentLocation"
+      }
+    },
+    "Model4": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Model4_Data"
+          }
+        }
+      },
+      "example": {
+        "data": [
+          {
+            "id": "id",
+            "message": "message",
+            "currentLocation": "currentLocation"
+          },
+          {
+            "id": "id",
+            "message": "message",
+            "currentLocation": "currentLocation"
+          }
+        ],
+        "status": 0
+      }
+    },
+    "Model5_Data": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "id": "id",
+        "message": "message",
+        "status": "status"
+      }
+    },
+    "Model5": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Model5_Data"
+          }
+        }
+      },
+      "example": {
+        "data": [
+          {
+            "id": "id",
+            "message": "message",
+            "status": "status"
+          },
+          {
+            "id": "id",
+            "message": "message",
+            "status": "status"
+          }
+        ],
+        "status": 0
+      }
+    },
+    "Model6_Data": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "id": "id",
+        "to": "to",
+        "message": "message"
+      }
+    },
+    "Model6": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Model6_Data"
+          }
+        }
+      },
+      "example": {
+        "data": [
+          {
+            "id": "id",
+            "to": "to",
+            "message": "message"
+          },
+          {
+            "id": "id",
+            "to": "to",
+            "message": "message"
+          }
+        ],
+        "status": 0
+      }
+    },
+    "Model8_Data": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "id": "id",
+        "message": "message"
+      }
+    },
+    "Model8": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Model8_Data"
+          }
+        }
+      },
+      "example": {
+        "data": [
+          {
+            "id": "id",
+            "message": "message"
+          },
+          {
+            "id": "id",
+            "message": "message"
+          }
+        ],
+        "status": 0
+      }
+    },
+    "Model9_Data": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "placedby": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "string"
+        },
+        "weightmetric": {
+          "type": "string"
+        },
+        "senton": {
+          "type": "string"
+        },
+        "deliveredon": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "fromlocation": {
+          "type": "string"
+        },
+        "tolocation": {
+          "type": "string"
+        },
+        "currentlocation": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "weightmetric": "weightmetric",
+        "tolocation": "tolocation",
+        "fromlocation": "fromlocation",
+        "senton": "senton",
+        "currentlocation": "currentlocation",
+        "placedby": "placedby",
+        "weight": "weight",
+        "id": "id",
+        "deliveredon": "deliveredon",
+        "status": "status"
+      }
+    },
+    "Model9": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Model9_Data"
+          }
+        }
+      },
+      "example": {
+        "data": [
+          {
+            "weightmetric": "weightmetric",
+            "tolocation": "tolocation",
+            "fromlocation": "fromlocation",
+            "senton": "senton",
+            "currentlocation": "currentlocation",
+            "placedby": "placedby",
+            "weight": "weight",
+            "id": "id",
+            "deliveredon": "deliveredon",
+            "status": "status"
+          },
+          {
+            "weightmetric": "weightmetric",
+            "tolocation": "tolocation",
+            "fromlocation": "fromlocation",
+            "senton": "senton",
+            "currentlocation": "currentlocation",
+            "placedby": "placedby",
+            "weight": "weight",
+            "id": "id",
+            "deliveredon": "deliveredon",
+            "status": "status"
+          }
+        ],
+        "status": 0
+      }
+    },
+    "User": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "othernames": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "registered": {
+          "type": "string"
+        },
+        "isadmin": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "firstname": "firstname",
+        "password": "password",
+        "isadmin": "isadmin",
+        "othernames": "othernames",
+        "registered": "registered",
+        "id": 6,
+        "email": "email",
+        "lastname": "lastname"
+      }
+    },
+    "Model10_Data": {
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "example": {
+        "user": {
+          "firstname": "firstname",
+          "password": "password",
+          "isadmin": "isadmin",
+          "othernames": "othernames",
+          "registered": "registered",
+          "id": 6,
+          "email": "email",
+          "lastname": "lastname"
+        },
+        "token": "token"
+      }
+    },
+    "Model10": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Model10_Data"
+          }
+        }
+      },
+      "example": {
+        "data": [
+          {
+            "user": {
+              "firstname": "firstname",
+              "password": "password",
+              "isadmin": "isadmin",
+              "othernames": "othernames",
+              "registered": "registered",
+              "id": 6,
+              "email": "email",
+              "lastname": "lastname"
+            },
+            "token": "token"
+          },
+          {
+            "user": {
+              "firstname": "firstname",
+              "password": "password",
+              "isadmin": "isadmin",
+              "othernames": "othernames",
+              "registered": "registered",
+              "id": 6,
+              "email": "email",
+              "lastname": "lastname"
+            },
+            "token": "token"
+          }
+        ],
+        "status": 0
+      }
+    }
+  }
+}
