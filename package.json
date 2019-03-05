@@ -7,7 +7,8 @@
     "test": "mocha --require babel-polyfill --compilers js:babel-register",
     "start": "node dist/server.js",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "dev": "nodemon server.js --exec babel-node --presets babel-preset-env"
+    "dev": "nodemon server.js --exec babel-node --presets babel-preset-env",
+    "heroku-postbuild": "echo Skip build on Heroku"
   },
   "repository": {
     "type": "git",
@@ -50,5 +51,6 @@
   "engines": {
     "node": "8.11.3",
     "npm": "6.4.1"
-  }
+  },
+  "heroku-run-build-script": true
 }
